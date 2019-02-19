@@ -10,7 +10,7 @@ function fish_greeting
     set pac '⎀'(dpkg --list|wc -l)
     set sym_os ✪
   end
-  set os (lsb_release -is | sed 's/"//g') 
+  set os (cat /etc/*release| grep NAME | head -1| cut -d= -f2 |  sed  's/\"//g') 
 
 
   set cpuinfo  (lscpu | grep @ | awk -F ')' '{print $NF}'  | sed 's/CPU//' | sed 's/0GHz//'  | sed 's/ [ ]*//g')
@@ -33,7 +33,8 @@ function fish_greeting
   set top ☕(ps -eo pcpu,comm --sort=-%cpu --no-headers  | head -1 | sed 's/\.[0-9]/%/' )
   set disk_use (df | grep '/$' | awk '{print $5}')
 
-  set -xg ip (dig +short myip.opendns.com @resolver1.opendns.com  2>&1 )' '
+  set -xg ip ( host -t txt o-o.myaddr.l.google.com 8.8.8.8 |
+          grep -oP "client-subnet \K(\d{1,3}\.){3}\d{1,3}"  2>&1 )' '
 
   echo -n (set_color $fish_color_user)$sym_os $os (set_color $fish_color_quote)$pac 
   echo -n (set_color $fish_color_param) ❖$cpu(set_color $fish_color_end) $cpu_speed 
