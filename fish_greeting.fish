@@ -33,8 +33,7 @@ function fish_greeting
   set top ☕(ps -eo pcpu,comm --sort=-%cpu --no-headers  | head -1 | sed 's/\.[0-9]/%/' )
   set disk_use (df | grep '/$' | awk '{print $5}')
 
-  set -xg ip ( host -t txt o-o.myaddr.l.google.com 8.8.8.8 |
-          grep -oP "client-subnet \K(\d{1,3}\.){3}\d{1,3}"  2>&1 )' '
+  set -xg ip ( host -t txt o-o.myaddr.l.google.com 8.8.8.8 | grep -oP "client-subnet \K(\d{1,3}\.){3}\d{1,3}"  )
 
   echo -n (set_color $fish_color_user)$sym_os $os (set_color $fish_color_quote)$pac 
   echo -n (set_color $fish_color_param) ❖$cpu(set_color $fish_color_end) $cpu_speed 
