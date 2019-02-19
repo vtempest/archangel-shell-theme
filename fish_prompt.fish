@@ -24,6 +24,10 @@ function fish_prompt
       set git_info "$git_info$dirty"
     end
   end
-  set ip (dig +short myip.opendns.com @resolver1.opendns.com  2>&1 )' '
-  echo -n -s (set_color green) $ip (set_color normal) $cwd $git_info $normal ' ' $arrow ' '
+  
+  if test -n (set -q $SSH_TTY )
+    echo -n -s (set_color green) $ip
+  end
+  
+  echo -n -s  (set_color normal) $cwd $git_info $normal ' ' $arrow ' '
 end
